@@ -65,9 +65,17 @@ def gain_ratio(x, t):
 
 def dane_wyjsciowe(d):
     #print(m(d))
+    wynik = []
     for n in range(len(d[0]) - 1):
-        print(f'\nInfo(' + str(n) + ')= ' + str(informacja(n, d)) + '\nGain= ' + str(gain(n, d)))
-        print(f'Gainratio=' + str(gain_ratio(n, d)))
+        sl={}
+        sl['atrybut']=n
+        sl['Informacja']=informacja(n, d)
+        sl['Gain']=gain(n, d)
+        sl['Gainratio']=round(gain_ratio(n, d),2)
+        wynik.append(sl)
+        #wynik.append(f'\nInfo(' + str(n) + ')= ' + str(informacja(n, d)) + '\nGain= ' + str(gain(n, d)))
+        #wynik.append(f'Gainratio=' + str(gain_ratio(n, d)))
+    return wynik
 
 
 def m(d):
@@ -111,7 +119,7 @@ def drzewo(d, n=0):
 
 #d - ścieżka do danych
 #dane = read_file(d)
-
+#print(dane)
 #dane_wyjsciowe(dane)
 #drzewo(dane)
 

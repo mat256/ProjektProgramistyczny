@@ -1,9 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for, render_template
 from flask_restful import Resource, Api
 from flasgger import LazyString
 from flasgger import Swagger, LazyJSONEncoder
 # from modules.dane import data_new
 from flasgger import swag_from
+from modules.sus import entropia, dane_wyjsciowe
 
 # import modules.movies
 
@@ -23,6 +24,10 @@ swagger_config = {"headers": [],
                       {"endpoint": 'hello',
                        "route": '/hello.yml',
                        "rule_filter": lambda rule: True,
+                       "model_filter": lambda tag: True, },
+                      {"endpoint": 'test',
+                       "route": '/test.yml',
+                       "rule_filter": lambda rule: True,
                        "model_filter": lambda tag: True, }
                   ],
                   "static_url_path": "/flasgger_static", "swagger_ui": True,
@@ -35,6 +40,33 @@ swagger = Swagger(app, template=swagger_template, config=swagger_config)
 @app.route("/")
 def hello():
     return "Hello World!!!"
+
+
+@app.route('/success/<wynik>')
+def success(wynik):
+    return wynik
+
+
+@swag_from("test.yml", methods=['Post'])
+@app.route('/test', methods=['POST', 'GET'])
+def test():
+    if request.method == 'POST':
+        lista=[list(k.split(",")) for k in request.form['nm'].split()]
+
+        #print(lista)
+        wynik = dane_wyjsciowe(lista)
+        # print(wynik)
+        #wynik = 2
+        return redirect(url_for('success', wynik=wynik))
+        #return wynik
+    else:
+        wynik = request.args.get('nm')
+        return redirect(url_for('success', wynik=wynik))
+
+
+@app.route('/ent')
+def ent():
+    return render_template('entropia.html')
 
 
 """class Links(Resource):
