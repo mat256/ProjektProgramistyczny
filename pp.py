@@ -6,10 +6,9 @@ from flasgger import Swagger, LazyJSONEncoder
 from flasgger import swag_from
 from modules.sus import entropia, dane_wyjsciowe
 
-# import modules.movies
 
 app = Flask(__name__)
-api = Api(app)
+pp = Api(app)
 app.json_encoder = LazyJSONEncoder
 
 swagger_template = dict(
