@@ -11,6 +11,7 @@ app = Flask(__name__)
 pp = Api(app)
 app.json_encoder = LazyJSONEncoder
 
+
 swagger_template = dict(
     info={
         'title': LazyString(lambda: 'My first Swagger UI document'),
