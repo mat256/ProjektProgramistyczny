@@ -69,7 +69,7 @@ def test():
 
 
 @swag_from("ent.yml", methods=['Post'])
-@app.route('/ent', methods=['Post'])
+@app.route('/ent')
 def ent():
     return render_template('entropia.html')
 
