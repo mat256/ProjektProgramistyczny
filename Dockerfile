@@ -1,21 +1,12 @@
-FROM python:3.8-slim
-ARG port
+# syntax=docker/dockerfile:1
 
-USER root
-COPY . /
-WORKDIR /
+FROM python:3.8-slim-buster
 
-ENV PORT=$port
+WORKDIR /python-docker
 
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
-    && apt-get -y install curl \
-    && apt-get install libgomp1
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
-RUN chgrp -R 0 /pp.py \
-    && chmod -R g=u /pp.py \
-    && pip install pip --upgrade \
-    && pip install -r requirements.txt
-EXPOSE $PORT
-ENTRYPOINT [ "python" ]
+COPY . .
 
-CMD [ "pp.py" ]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
