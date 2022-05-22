@@ -16,5 +16,6 @@ RUN chgrp -R 0 /pp.py \
     && pip install pip --upgrade \
     && pip install -r requirements.txt
 EXPOSE $PORT
+ENTRYPOINT [ "python" ]
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "pp:app"]
+CMD [ "pp.py" ]
