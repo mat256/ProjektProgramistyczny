@@ -17,4 +17,4 @@ RUN chgrp -R 0 /pp.py \
     && pip install -r requirements.txt
 EXPOSE $PORT
 
-CMD gunicorn app:server --bind 0.0.0.0:$PORT --preload
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "pp:app"]
